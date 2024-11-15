@@ -25,9 +25,9 @@ class CrossAttentionLayer(nn.Module):
 
         return cross_attended_features
 
-class MLCrossAttentionGating(nn.Module):
+class DIA(nn.Module):
     def __init__(self, eeg_dim=256, et_dim=177, d_model=256, num_layers=3):
-        super(MLCrossAttentionGating, self).__init__()
+        super(DIA, self).__init__()
         self.d_model = d_model
 
         self.linear_et = nn.Linear(et_dim, d_model)
@@ -36,7 +36,6 @@ class MLCrossAttentionGating(nn.Module):
         self.gate_eeg = nn.Linear(d_model, d_model)
         self.gate_et = nn.Linear(d_model, d_model)
 
-        # Three independent cross-attention layers
         self.cross_attention_layers = nn.ModuleList([
             CrossAttentionLayer(d_model) for _ in range(num_layers)
         ])
