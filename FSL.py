@@ -35,7 +35,6 @@ class ProtoNet(nn.Module):
                 return y.eq(c).nonzero()[:n_support].squeeze(1)
 
             classes = torch.unique(y)
-            # 为每个类 c 提取前 n_support 个样本的索引
             support_idxs = list(map(supp_idxs, classes))
             query_idxs = torch.stack(list(map(lambda c: y.eq(c).nonzero()[n_support:], classes))).view(-1)
             query_samples = x[query_idxs]  # (n_classes *n_query, dim)
